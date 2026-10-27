@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CareHub Healthcare Management</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- ================= LOGIN ================= -->
+
+<div id="loginPage">
+
+<div class="login-box">
+
+<div class="logo">♥ CareHub</div>
+
+<div class="login-sub">
+Healthcare Management System
+</div>
+
+<div class="roles">
+
+<button class="active" onclick="chooseRole('patient',this)">
+Patient
+</button>
+
+<button onclick="chooseRole('doctor',this)">
+Doctor
+</button>
+
+<button onclick="chooseRole('receptionist',this)">
+Reception
+</button>
+
+<button onclick="chooseRole('admin',this)">
+Admin
+</button>
+
+</div>
+
+<div id="loginError" class="error hidden"></div>
+
+<div class="input-group">
+<label>Username / Email</label>
+<input id="loginUsername" placeholder="Enter username">
+</div>
+
+<div class="input-group">
+<label>Password</label>
+<input id="loginPassword" type="password" placeholder="Enter password">
+</div>
+
+<div class="login-links">
+
+<label>
+<input type="checkbox">
+Remember me
+</label>
+
+<button class="link-btn" onclick="forgotPassword()">
+Forgot Password?
+</button>
+
+</div>
+
+<button class="login-btn" onclick="login()">
+Login to CareHub
+</button>
+
+<div id="registerLink"
+style="text-align:center;margin-top:18px;font-size:13px">
+
+New Patient?
+
+<button class="link-btn" onclick="openPatientRegister()">
+Create New Profile
+</button>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- ================= APPLICATION ================= -->
+
+<div id="app">
+
+<aside class="sidebar">
+
+<div class="side-logo">
+♥ CareHub
+</div>
+
+<div class="nav" id="navigation"></div>
+
+</aside>
+
+<main class="main">
+
+<header class="topbar">
+
+<div class="page-title" id="pageTitle">
+Dashboard
+</div>
+
+<div class="user">
+
+<div>
+<div id="userName" style="font-weight:bold;font-size:13px"></div>
+<div id="userRole" style="font-size:11px;color:#8995a5"></div>
+</div>
+
+<div class="avatar" id="avatar">U</div>
+
+</div>
+
+</header>
+
+<div class="content">
+
+<section id="dashboard" class="section active">
+<div id="dashboardContent"></div>
+</section>
+
+<section id="doctors" class="section">
+<div class="card">
+<h3>Tamil Nadu Doctors</h3>
+
+<input
+class="search"
+id="doctorSearch"
+placeholder="Search doctor / hospital / district"
+oninput="renderDoctors()">
+
+<div id="doctorList" class="three"></div>
+</div>
+</section>
+
+<section id="patients" class="section">
+
+<div class="card">
+
+<h3>Patient Records</h3>
+
+<input
+class="search"
+id="patientSearch"
+placeholder="Search patient"
+oninput="renderPatients()">
+
+<div class="table-container">
+
+<table>
+
+<thead>
+<tr>
+<th>Patient</th>
+<th>Phone</th>
+<th>Gender</th>
+<th>Blood</th>
+<th>Location</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody id="patientTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+</section>
+
+
+<section id="appointments" class="section">
+<div id="appointmentContent"></div>
+</section>
+
+
+<section id="diagnosis" class="section">
+
+<div class="card">
+
+<h3>Diagnosis</h3>
+
+<div class="form-grid">
+
+<div class="input-group">
+<label>Patient</label>
+<select id="diagnosisPatient"></select>
+</div>
+
+<div class="input-group">
+<label>Symptoms</label>
+<input id="symptoms" placeholder="Fever, cough, headache">
+</div>
+
+<div class="input-group full">
+<label>Doctor Notes</label>
+<textarea id="doctorNotes" rows="3"></textarea>
+</div>
+
+</div>
+
+<button class="primary" onclick="saveDiagnosis()">
+Save Diagnosis
+</button>
+
+</div>
+
+<div class="card">
+
+<h3>Diagnosis History</h3>
+
+<div class="table-container">
+
+<table>
+
+<thead>
+<tr>
+<th>Patient</th>
+<th>Symptoms</th>
+<th>Suggestion</th>
+<th>Notes</th>
+<th>Date</th>
+</tr>
+</thead>
+
+<tbody id="diagnosisTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section id="prescription" class="section">
+
+<div class="card">
+
+<h3>Prescription</h3>
+
+<div class="form-grid">
+
+<div class="input-group">
+<label>Patient</label>
+<select id="prescriptionPatient"></select>
+</div>
+
+<div class="input-group">
+<label>Medicine</label>
+<input id="medicine">
+</div>
+
+<div class="input-group">
+<label>Dosage</label>
+<input id="dosage" placeholder="1 tablet">
+</div>
+
+<div class="input-group">
+<label>Duration</label>
+<input id="duration" placeholder="5 days">
+</div>
+
+<div class="input-group full">
+<label>Instructions</label>
+<textarea id="instructions"></textarea>
+</div>
+
+</div>
+
+<button class="primary" onclick="savePrescription()">
+Generate Prescription
+</button>
+
+</div>
+
+<div class="card">
+
+<h3>Prescription History</h3>
+
+<div class="table-container">
+
+<table>
+
+<thead>
+<tr>
+<th>Patient</th>
+<th>Medicine</th>
+<th>Dosage</th>
+<th>Duration</th>
+<th>Date</th>
+</tr>
+</thead>
+
+<tbody id="prescriptionTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section id="billing" class="section">
+<div id="billingContent"></div>
+</section>
+
+
+<section id="analytics" class="section">
+<div id="analyticsContent"></div>
+</section>
+
+
+<section id="profile" class="section">
+
+<div class="card">
+
+<h3>My Profile</h3>
+
+<div id="profileContent"></div>
+
+</div>
+
+</section>
+
+
+<section id="admin" class="section">
+<div id="adminContent"></div>
+</section>
+
+
+<section id="receipt" class="section">
+<div id="receiptContent"></div>
+</section>
+
+</div>
+</main>
+</div>
+
+
+<!-- MODAL -->
+
+<div id="modal" class="modal hidden">
+
+<div class="modal-box">
+
+<div class="modal-head">
+
+<h3 id="modalTitle">Details</h3>
+
+<button class="close" onclick="closeModal()">✕</button>
+
+</div>
+
+<div id="modalBody"></div>
+
+</div>
+
+</div>
+
+
+<script src="app.js"></script>
+
+</body>
+</html>
